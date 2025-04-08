@@ -298,5 +298,5 @@ int main() {
     init_vel_MB(1.0, mt);
 
     // t = 1e5の長さのNVEシミュレーションを実行
-    NVE(2.2e4);
+    NVE(1e5);
 }
