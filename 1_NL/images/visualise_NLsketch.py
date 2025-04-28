@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 
 a = np.load('./conf.npz')
 conf = a['position']
