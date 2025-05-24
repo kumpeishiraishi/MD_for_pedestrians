@@ -29,17 +29,21 @@ $$
 と表すことができる。これを使って、上のテイラー展開を書き直すと
 
 $$
-x(t + \Delta t) = x(t) + \Delta t v(t) + \frac{\Delta t^2}{2m} F(t) \\
+\begin{align}
+x(t + \Delta t) &= x(t) + \Delta t v(t) + \frac{\Delta t^2}{2m} F(t) \\
 
-v(t + \Delta t) = v(t) + \frac{\Delta t}{2m} \left[F(t) + F(t + \Delta t)\right]
+v(t + \Delta t) &= v(t) + \frac{\Delta t}{2m} \left[F(t) + F(t + \Delta t)\right]
+\end{align}
 $$
 
 と書ける。少しだけ式変形すると
 
 $$
-x(t + \Delta t) = x(t) + \Delta t \left[ v(t) + \frac{\Delta t}{2m} F(t) \right] \\
+\begin{align}
+x(t + \Delta t) &= x(t) + \Delta t \left[ v(t) + \frac{\Delta t}{2m} F(t) \right] \\
 
-v(t + \Delta t) = \left[ v(t) + \frac{\Delta t}{2m} F(t) \right] + \frac{\Delta t}{2m} F(t + \Delta t)
+v(t + \Delta t) &= \left[ v(t) + \frac{\Delta t}{2m} F(t) \right] + \frac{\Delta t}{2m} F(t + \Delta t)
+\end{align}
 $$
 
 と、鉤括弧内に両式で共通した部分が現れる。
