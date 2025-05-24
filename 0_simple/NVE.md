@@ -6,7 +6,7 @@ $$
 x(t + \Delta t) = x(t) + \Delta t v(t) + \frac{\Delta t^2}{2} a(t) + \cdots
 $$
 
-となる（以下、 $\Delta t^3$ 以上の項は考えないことにする）。同様に、$x(t)$ を $t + \Delta t$ の近くで展開することも出来る。すると、
+となる（以下、 $\Delta t^3$ 以上の項は考えないことにする）。同様に、 $x(t)$ を $t + \Delta t$ の近くで展開することも出来る。すると、
 
 $$
 x(t) = x(t + \Delta t) - \Delta t v(t + \Delta t) + \frac{\Delta t^2}{2} a(t + \Delta t)
