@@ -1,0 +1,448 @@
+分子動力学法（molecular dynamics; MD）は、運動方程式に従って系の運動を時々刻々追跡していく手法である。計算機で物理現象を解析する強力な手法であり、非常に幅広い領域で使われている。ここでは、MDでよく用いられるアルゴリズムを導出し、そのアルゴリズムが持つ性質を理解することを目指す。
+
+1次元空間中の粒子の運動を考える。時刻 $t$ での粒子の位置を $x(t)$ 、速度を $v(t) = \dot{x}(t)$ 、加速度を $a(t) = \ddot{x}(t)$ と表記する。質量は $m$ とする。 $x(t + \Delta t)$ を $t$ の近くでテイラー展開すると
+
+$$
+x(t + \Delta t) = x(t) + \Delta t v(t) + \cdots
+$$
+
+$$
+v(t + \Delta t) = v(t) + \Delta t a(t) + \cdots
+$$
+
+である。この差分方程式に従って粒子の運動を追跡するのが「オイラー法」という数値積分手法である。 $\Delta t$ の1次の精度しかなく、この直線による近似はすぐに破綻する。近似で使う多項式の次数を上げていって精度を出すこともできる。詳細は、数値計算の教科書で「ルンゲクッタ法」に関連する箇所を読んでみてください。
+
+これらの方法には、数値誤差が蓄積されてしまうという難点がある。物理的には、全エネルギーが時間とともにズレてしまうことに相当し、物理現象のシミュレーションとしては具合が悪い。そのため、実際の研究では「速度ベルレ法」という別の方法がよく用いられる。そのアルゴリズムを導出してみよう。今回は2次まで展開してみると、
+
+$$
+x(t + \Delta t) = x(t) + \Delta t v(t) + \frac{\Delta t^2}{2} a(t) + \cdots
+$$
+
+となる（以下、 $\Delta t^3$ 以上の項は考えないことにする）。同様に、 $x(t)$ を $t + \Delta t$ の近くで展開することも出来る。すると、
+
+$$
+x(t) = x(t + \Delta t) - \Delta t v(t + \Delta t) + \frac{\Delta t^2}{2} a(t + \Delta t)
+$$
+
+と書くことができる。これらの両辺を足し合わせて整理すると、
+
+$$
+v(t + \Delta t) = v(t) + \frac{\Delta t}{2} \left[a(t) + a(t + \Delta t)\right]
+$$
+
+となる。
+
+ところで、運動方程式 $ma(t) = F(t)$ から、加速度 $a(t)$ は粒子にかかる力 $F(t)$ を用いて
+
+$$
+a(t) = \frac{F(t)}{m}
+$$
+
+と表せる。これを使って上のテイラー展開を書き直すと
+
+$$
+x(t + \Delta t) = x(t) + \Delta t v(t) + \frac{\Delta t^2}{2m} F(t)
+$$
+
+$$
+v(t + \Delta t) = v(t) + \frac{\Delta t}{2m} \left[F(t) + F(t + \Delta t)\right]
+$$
+
+と書ける。少しだけ式変形すると
+
+$$
+x(t + \Delta t) = x(t) + \Delta t \left[ v(t) + \frac{\Delta t}{2m} F(t) \right]
+$$
+
+$$
+v(t + \Delta t) = \left[ v(t) + \frac{\Delta t}{2m} F(t) \right] + \frac{\Delta t}{2m} F(t + \Delta t)
+$$
+
+と、鉤括弧内に共通した部分が現れる。
+
+これが、速度べルレ法（velocity Verlet）というアルゴリズムでよく使われる形である。改めてアルゴリズムを整理すると、速度ベルレ法は
+
+1. $v\left(t + \frac{\Delta t}{2}\right) = v(t) + \frac{\Delta t}{2m}F(t)$ で速度を更新する
+2. $x(t + \Delta t) = x(t) + \Delta t v\left(t + \frac{\Delta t}{2}\right)$ で位置を更新する
+3. 新しい時刻での位置 $x(t + \Delta t)$ で力 $F(t + \Delta t)$ を計算する
+4. $v(t + \Delta t) = v\left(t + \frac{\Delta t}{2}\right) + \frac{\Delta t}{2m}F(t + \Delta t)$ で速度を更新する
+5. ステップ1に戻る
+
+と、まとめられる。これまで単一の粒子による1次元の運動を考えてきたが、3次元空間中の $N$ 粒子の運動（物質の研究をするときに一番自然な設定）に変更するのは簡単なはずだ。
+
+さて、これは運動方程式を解いていることに他ならない。そのときには当然エネルギー保存則が成り立つので、速度ベルレ法によって数値積分された系はミクロカノニカル分布に従った状態を取っていく。つまり、粒子数 $N$ 、体積 $V$ 、エネルギー $E$ が一定の状態を時々刻々発生させていく[fn::このような一連のミクロ状態の時系列を「トラジェクトリー」や「（相空間中の）軌道」などと呼ぶ]ため、速度ベルレ法は「 /NVE/ ダイナミクス」と呼ばれることも多い。
+
+以上で速度ベルレ法の導出は完了した。このアルゴリズムの実装は簡単だろう。実装の際には、このリポジトリ内に具体例を置いてあるので参照してほしい。また、自分でコードを書かずとも、世の中には沢山のMDプログラムが存在している。有名所では、
+- [[https://www.lammps.org][LAMMPS]]
+- [[https://glotzerlab.engin.umich.edu/hoomd-blue][HOOMD-blue]]
+- [[http://rumd.org][RUMD]]
+- [[https://wiki.fysik.dtu.dk/ase][ASE]]
+- [[https://radical-ai.github.io/torch-sim][torch-sim]]
+などが挙げられる。その使い方はマニュアルを見て自分で学習できると思う。参考までに、Kob-AndersenモデルのLAMMPSスクリプトは[[https://gist.github.com/kumpeishiraishi/a0de42f6477e90e5f2ac3c692389db38][ここ]]にある。
+
+以下では、速度ベルレ法の持つ「長時間に亘ってエネルギーが保存する」という性質を詳しく理解するため、解析力学の定式化で速度ベルレ法をもう一度導出してみよう。系の状態を一般化座標と一般化運動量 $(q_1, q_2, \cdots, q_{3N}, p_1, p_2, \cdots, p_{3N})$ で表す。ハミルトニアン $H = K(p) + V(q)$ を使って、ハミルトンの運動方程式は
+
+$$
+\frac{d\vec{q}}{dt} = \frac{\partial H}{\partial \vec{p}}, \quad \frac{d\vec{p}}{dt} = -\frac{\partial H}{\partial \vec{q}}
+$$
+
+のように書ける。これは正準方程式とも呼ぶ。正準座標 $\vec{r} = (\vec{q}, \vec{p})$ から変換して得られた別の座標 $\vec{R} = (\vec{Q}, \vec{P})$ が正準方程式を満たすとき、その変換は正準変換という。正準変換の必要十分条件を考える。正準方程式は、行列
+
+$$
+M = 
+\begin{pmatrix}
+0  & I \\
+-I & 0
+\end{pmatrix}
+$$
+
+を使って（ここで $0, I$ はそれぞれサイズ $3N \times 3N$ のゼロ行列と単位行列とする）
+
+$$
+\dot{r}_i = M_{ij} \frac{\partial H}{\partial r_j}
+$$
+
+と書き表すことができる。 $\vec{r}$ から $\vec{R}$ への正準変換を考える。新しい座標の時間微分は
+
+$$
+\dot{R}_i = \frac{\partial R_i}{\partial r_m} \dot{r}_m
+$$
+
+となるが、正準方程式から
+
+$$
+\dot{R}_i = \frac{\partial R_i}{\partial r_m} M_{mk} \frac{\partial H}{\partial r_k} = \frac{\partial R_i}{\partial r_m} M_{mk} \frac{\partial R_j}{\partial r_k} \frac{\partial H}{\partial R_j}
+$$
+
+と書き換えることができる。正準変換を考えているから当然 $\vec{R}$ も正準方程式を満たすので、
+
+$$
+\dot{R}_i = M_{ij} \frac{\partial H}{\partial R_j}
+$$
+
+となる。両式を見比べると、ヤコビアン $J_{ij} = \frac{\partial R_i}{\partial r_j}$ を使って、正準変換の必要十分条件は
+
+$$
+J M J^T = M
+$$
+
+と書くことができる。これをシンプレクティック条件と呼ぶ。
+
+さて、時間発展とは、ある時刻の座標 $(\vec{q}(t), \vec{p}(t))$ から別の時刻の座標 $(\vec{q}(t^\prime), \vec{p}(t^\prime))$ への正準変換と見做すことができる。これをもう少し深堀りしてみよう。位相空間中の点 $A(\vec{q}, \vec{p})$ を考える。 $A$ を時刻 $t$ について微分すると、チェインルールより
+
+$$
+\frac{dA}{dt} = \sum_{\alpha = 1}^{3N} \left[ \frac{\partial A}{\partial q_\alpha} \frac{dq_\alpha}{dt} + \frac{\partial A}{\partial p_\alpha} \frac{dp_\alpha}{dt} \right]
+$$
+
+と書けるが、正準方程式より、この微分は
+
+$$
+\frac{dA}{dt} = \sum_{\alpha = 1}^{3N} \left[ \frac{\partial H}{\partial p_\alpha} \frac{\partial A}{\partial q_\alpha} - \frac{\partial H}{\partial q_\alpha} \frac{\partial A}{\partial p_\alpha} \right]
+$$
+
+と書き直せる。ポアソン括弧を使えば $\frac{dA}{dt} = \{A, H\}$ と書くこともできる。ここで、リウビル演算子 $iL = \{\bullet, H\}$ を定義すると、 $A$ の微分は $\frac{dA}{dt} = iLA$ となり、この解は
+
+$$
+A(t) = e^{iLt} A(0)
+$$
+
+と書ける。ここで現れた $e^{iLt}$ （リウビル演算子を指数の肩に乗せたもの）を時間発展演算子と呼ぶ。
+
+リウビル演算子 $iL$ の定義から、これは2つに分解することができる： $iL = iL_A + iL_B$ 。これらのリウビル演算子は非可換なので、指数の肩に乗せた時間発展演算子を指数関数の積の形で厳密に分解することはできない。しかし、トロッター分解
+
+$$
+e^{A+B} = \lim_{P \to \infty} \left[ e^{A/P} e^{B/P} \right]^P
+$$
+
+$$
+e^{A+B} = \lim_{P \to \infty} \left[ e^{B/2P} e^{A/P} e^{B/2P} \right]^P
+$$
+
+という公式を用いて近似することはできる（第1式は1次の展開、第2式は2次の展開、 $P$ は整数）。つまり、時間発展演算子をトロッター分解すると、
+
+$$
+e^{iLt} = \lim_{P \to \infty} \left[ e^{iL_B t/2P} e^{iL_A t/P} e^{iL_B t/2P} \right]^P
+$$
+
+となるのだ。ここで、 $\Delta t = t/P$ として書き直すと、
+
+$$
+e^{iLt} = \lim_{P \to \infty, \Delta t \to 0} \left[ e^{iL_B \Delta t/2} e^{iL_A \Delta t} e^{iL_B \Delta t/2} \right]^P
+$$
+
+という形になる。よって、
+
+$$
+e^{iL\Delta t} \approx e^{iL_A \Delta t} e^{iL_B \Delta t} + O(\Delta t^2)
+$$
+
+$$
+e^{iL\Delta t} \approx e^{iL_B \Delta t/2} e^{iL_A \Delta t} e^{iL_B \Delta t/2} + O(\Delta t^3)
+$$
+
+という分解ができる（1次と2次の分解を例示した）。
+
+いよいよ、これを具体的に適用してみよう。リウビル演算子の個々の成分は
+
+$$
+iL_A = \frac{\partial H}{\partial p} \frac{\partial}{\partial q} = \frac{\partial K}{\partial p} \frac{\partial}{\partial q} = \frac{p}{m} \frac{\partial}{\partial q}
+$$
+
+$$
+iL_B = -\frac{\partial H}{\partial q} \frac{\partial}{\partial p} = -\frac{\partial V}{\partial q} \frac{\partial}{\partial p} = F(q) \frac{\partial}{\partial p}
+$$
+
+である。これを使って、2次の展開
+
+$$
+\exp (iL\Delta t) \approx \exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right] \exp\left[ \Delta t \frac{p}{m} \frac{\partial}{\partial q} \right] \exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right]
+$$
+
+を一つずつ $(q, p)$ に作用させる。まず、一番右の演算子を作用させると、
+
+$$
+\exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right]
+\begin{pmatrix}
+q \\
+p
+\end{pmatrix}
+=
+\left(
+1 + \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} + \cdots
+\right)
+\begin{pmatrix}
+q \\
+p
+\end{pmatrix}
+=
+\begin{pmatrix}
+q \\
+p + \frac{\Delta t}{2}F(q)
+\end{pmatrix}
+$$
+
+となる。次に、真ん中の演算子は、
+
+$$
+\exp\left[ \Delta t \frac{p}{m} \frac{\partial}{\partial q} \right]
+\begin{pmatrix}
+q \\
+p + \frac{\Delta t}{2}F(q)
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} \\
+p + \frac{\Delta t}{2} F\left( q + \Delta t \frac{p}{m}\right)
+\end{pmatrix}
+$$
+
+となる。但し、 $p$ 成分において
+
+$$
+\exp\left(c \frac{\partial}{\partial x} \right) g(x) = \sum \frac{1}{k!} c^k g^{(k)}(x) = g(x + c)
+$$
+
+という関係を使った。最後に、一番左の演算子を作用させると、
+
+$$
+\exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right]
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} \\
+p + \frac{\Delta t}{2} F\left( q + \Delta t \frac{p}{m}\right)
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} + \frac{\Delta t^2}{2m} F(q) \\
+p + \frac{\Delta t}{2} F(q) + \frac{\Delta t}{2} F\left(
+q + \frac{\Delta t}{m}\left[ p + \frac{\Delta t}{2}F(q) \right]
+\right)
+\end{pmatrix}
+$$
+となる。これは、上でテイラー展開を用いて導出した速度ベルレ法と一致している。
+
+これと同様に1次の展開公式
+
+$$
+\exp (iL\Delta t) \approx \exp\left[ \Delta t \frac{p}{m} \frac{\partial}{\partial q} \right] \exp\left[ \Delta t F(q) \frac{\partial}{\partial p} \right]
+$$
+
+に適用すると、
+
+$$
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} \\
+p + \Delta t F(q + \Delta t \frac{p}{m})
+\end{pmatrix}
+$$
+
+となる（計算してみよう）。これは、冒頭で導出したオイラー法とはアルゴリズムが異なることに注意（こちらは *新しい位置での力を使って* 速度を更新する）。
+
+さて、時間発展は正準変換であり、正準変換はシンプレクティック条件を満たすことを先に述べた。ここでトロッター分解から導出したアルゴリズムは、時間発展演算子の分解から導出されたものなので、当然シンプレクティックである。これを確認してみよう。
+
+まず、1次の方法
+
+$$
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{\partial H}{\partial p} \\
+p - \Delta t \frac{\partial H}{\partial Q}
+\end{pmatrix}
+$$
+
+におけるヤコビアンは
+
+$$
+J = \frac{\partial (Q, P)}{\partial (q, p)}
+=
+\begin{pmatrix}
+1                                           & \Delta t \frac{\partial^2 H}{\partial p^2} \\
+-\Delta t \frac{\partial^2 H}{\partial Q^2} & 1 - \Delta t^2 \frac{\partial^2 H}{\partial Q^2} \frac{\partial^2 H}{\partial p^2}
+\end{pmatrix}
+$$
+
+となる。これは $JMJ^T = M$ の関係を満たす。つまり、このアルゴリズムはオイラー法と違ってシンプレクティック性を満たすので、シンプレクティック・オイラー法などと呼ばれる。
+
+次に2次の方法（速度ベルレ法）
+
+$$
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t p - \frac{\Delta t^2}{2} \frac{\partial H}{\partial q} \\
+p - \frac{\Delta t}{2} \left[ \frac{\partial H}{\partial q} + \frac{\partial H}{\partial Q} \right]
+\end{pmatrix}
+$$
+
+のヤコビアンは
+
+$$
+J =
+\begin{pmatrix}
+\frac{\partial Q}{\partial q} & \frac{\partial Q}{\partial p} \\
+\frac{\partial P}{\partial q} & \frac{\partial P}{\partial p}
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 - \frac{\Delta t^2}{2} \frac{\partial^2 H}{\partial q^2} & \Delta t \\
+- \frac{\Delta t}{2} \left[ \frac{\partial^2 H}{\partial q^2} + \frac{\partial^2 H}{\partial Q^2} \left( 1 - \frac{\Delta t^2}{2} \frac{\partial^2 H}{\partial q^2} \right) \right] & 1 - \frac{\Delta t^2}{2} \frac{\partial^2 H}{\partial Q^2}
+\end{pmatrix}
+$$
+
+であるが、これもシンプレクティック条件を満たす。つまり、指数分解公式から導出されたアルゴリズムはシンプレクティック性を満たすことが確認できた（1次元調和振動子での実装は[[https://gist.github.com/kumpeishiraishi/e5d550bc840339a707d50aafdf80dbc2][ここ]]を参照）。エネルギー保存
+
+$$
+\frac{dH}{dt} = \left( \frac{\partial H}{\partial \vec{r}} \right)^T \frac{d \vec{r}}{dt} = \left( \frac{\partial H}{\partial \vec{r}} \right)^T M \left( \frac{\partial H}{\partial \vec{r}} \right) = 0
+$$
+
+は、正準方程式に従うならば当然成り立つ。MDで使うアルゴリズムにシンプレクティック条件を課すことは、上式の $M$ の部分を保ち、長時間でのエネルギー保存を保証するのである。なお、1次と2次の双方で、ヤコビアンの行列式は $\det J = 1$ であった。シンプレクティック条件から従うこの性質は、相空間の体積を保存するリウビルの定理に対応している。また、シンプレクティック性とは直接関係ないが、上の分解から速度ベルレ法は時間反転対称の形をしていることが分かる。1次の分解から得られるシンプレクティック・オイラー法はシンプレクティックだが時間反転対称ではないことに注意。
+
+トロッター分解において
+
+$$
+\exp (iLt) \approx \exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right] \exp\left[ \Delta t \frac{p}{m} \frac{\partial}{\partial q} \right] \exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right]
+$$
+
+なる分解を行ったが、右辺と *厳密に* 一致するように、左辺のリウビル演算子を取ることもできる。このように定義し直したリウビル演算子を $iL^\prime$ とすれば、トロッター分解に基づいて導出されたアルゴリズムは $iL^\prime$ に対応するハミルトニアンを *厳密に* 保存することが分かる。これを「影のハミルトニアン」と呼ぶ。
+
+ここでは、1次元調和振動子に着目する。この系の正しいハミルトニアンは
+
+$$
+H = \frac{1}{2} p^2 + \frac{1}{2} q^2
+$$
+
+である（質量、バネ定数ともに1とした）。この系の1次のシンプレクティックな数値解法
+
+$$
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t p \\
+p - \Delta t Q
+\end{pmatrix}
+$$
+
+に対して、影のハミルトニアンを導出してみよう。元々、このアルゴリズムは1次のトロッター分解
+
+$$
+e^{iL\Delta t} \approx e^{iL_A\Delta t} e^{iL_B\Delta t}
+$$
+
+から得られたのであった。ここでは、この分解が厳密に成り立つようなリウビル演算子 $iL^\prime$ を求める。その際に、Baker–Campbell–Hausdorff（BCH）の公式を用いる。一般に、非可換な演算子 $X, Y$ について $e^Z = e^Xe^Y$ が成り立つとき、 $Z$ は
+
+$$
+Z = X + Y + \frac{1}{2}[X, Y] + \frac{1}{12}\left( [X, [X, Y]] + [Y, [Y, X]] \right) - \frac{1}{24}[Y, [X, [X, Y]]] + \cdots
+$$
+
+と書くことができる。これがBCHの公式である。
+
+これをトロッター分解に適用する（2次のトロッター分解についてはBCHの公式を2度使えばよい）。 $X = iL_A$ 、 $Y = iL_B$ と略記すると、
+
+$$
+iL^\prime \Delta t = iL \Delta t + \frac{\Delta t^2}{2}[X, Y] + \frac{\Delta t^3}{12}\left( [X, [X, Y]] + [Y, [Y, X]] \right) - \frac{\Delta t^4}{24}[Y, [X, [X, Y]]] + \cdots
+$$
+
+である（ $X + Y = iL$ ）。ここで
+
+$$
+X = iL_A =  \frac{\partial H}{\partial p}\frac{\partial}{\partial q} = \{\bullet, K\}
+$$
+
+$$
+Y = iL_B = -\frac{\partial H}{\partial q}\frac{\partial}{\partial p} = \{\bullet, V\}
+$$
+
+より、
+
+$$
+[X, Y] f = XY f - YX f = \{ \{f, V\}, K \} - \{ \{f, K\}, V \} = \{ f, \{V, K\} \}
+$$
+
+となる。但し、ポアソン括弧に対するヤコビの恒等式
+
+$$
+\{f, \{g, h\}\} + \{g, \{h, f\}\} + \{h, \{f, g\}\} = 0
+$$
+
+を使った（証明してみよう）。 $\{V, K\} = pq$ なので、リウビル演算子 $iL^\prime$ に対する1次の補正は
+
+$$
+[X, Y] = \{\bullet, pq\}
+$$
+
+である。従って、
+
+$$
+iL^\prime = \{\bullet, H\} + \frac{\Delta t}{2}\{\bullet, pq\} + O(\Delta t^2)
+$$
+
+となり、影のハミルトニアンは
+
+$$
+H^\prime(p, q) = \frac{1}{2}p^2 + \frac{1}{2}q^2 + \frac{\Delta t}{2}pq
+$$
+
+となる。実際に、（位置を先に更新する）シンプレクティック・オイラー法で $H^\prime(P, Q) = H^\prime(p, q)$ となることを確認してみよう。また、調和振動子の系において、速度ベルレ法に対する影のハミルトニアンも求めてみよう。
+
+参考文献：
+- Tuckerman, 'Statistical Mechanics: Theory and Molecular Simulation', Oxford University Press
+- Allen, Tildesley, 'Computer Simulation of Liquids', Oxford University Press
+- Frenkel, Smit, 'Understanding Molecular Simulation', Academic Press
+- 渡辺宙志「[[https://kaityo256.github.io/md2019/][分子動力学法の理論と実装]]」（集中講義資料）
+- 陰山聡「[[https://www.research.kobe-u.ac.jp/csi-viz/members/kageyama/docs/160122a_canonical_transform.pdf][正準変換についてのメモ]]」
+- Yoshida, 'Construction of higher order symplectic integrators', [[https:doi.org/10.1016/0375-9601(90)90092-3][Physics Letters A *150*, 262--268 (1990)]]
+- 吉田春夫「シンプレクティック数値解法」数理科学 *33*, 37--46 (1995)
