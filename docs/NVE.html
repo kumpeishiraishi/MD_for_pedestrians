@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>NVE</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">body {
+font-family: Helvetica, arial, sans-serif;
+font-size: 14px;
+line-height: 1.6;
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: white;
+padding: 30px; }
+body > *:first-child {
+margin-top: 0 !important; }
+body > *:last-child {
+margin-bottom: 0 !important; }
+a {
+color: #4183C4; }
+a.absent {
+color: #cc0000; }
+a.anchor {
+display: block;
+padding-left: 30px;
+margin-left: -30px;
+cursor: pointer;
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0; }
+h1, h2, h3, h4, h5, h6 {
+margin: 20px 0 10px;
+padding: 0;
+font-weight: bold;
+-webkit-font-smoothing: antialiased;
+cursor: text;
+position: relative; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+text-decoration: none; }
+h1 tt, h1 code {
+font-size: inherit; }
+h2 tt, h2 code {
+font-size: inherit; }
+h3 tt, h3 code {
+font-size: inherit; }
+h4 tt, h4 code {
+font-size: inherit; }
+h5 tt, h5 code {
+font-size: inherit; }
+h6 tt, h6 code {
+font-size: inherit; }
+h1 {
+font-size: 28px;
+color: black; }
+h2 {
+font-size: 24px;
+border-bottom: 1px solid #cccccc;
+color: black; }
+h3 {
+font-size: 18px; }
+h4 {
+font-size: 16px; }
+h5 {
+font-size: 14px; }
+h6 {
+color: #777777;
+font-size: 14px; }
+p, blockquote, ul, ol, dl, li, table, pre {
+margin: 15px 0; }
+hr {
+background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+border: 0 none;
+color: #cccccc;
+height: 4px;
+padding: 0; }
+body > h2:first-child {
+margin-top: 0;
+padding-top: 0; }
+body > h1:first-child {
+margin-top: 0;
+padding-top: 0; }
+body > h1:first-child + h2 {
+margin-top: 0;
+padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+margin-top: 0;
+padding-top: 0; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+margin-top: 0;
+padding-top: 0; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+margin-top: 0; }
+li p.first {
+display: inline-block; }
+ul, ol {
+padding-left: 30px; }
+ul :first-child, ol :first-child {
+margin-top: 0; }
+ul :last-child, ol :last-child {
+margin-bottom: 0; }
+dl {
+padding: 0; }
+dl dt {
+font-size: 14px;
+font-weight: bold;
+font-style: italic;
+padding: 0;
+margin: 15px 0 5px; }
+dl dt:first-child {
+padding: 0; }
+dl dt > :first-child {
+margin-top: 0; }
+dl dt > :last-child {
+margin-bottom: 0; }
+dl dd {
+margin: 0 0 15px;
+padding: 0 15px; }
+dl dd > :first-child {
+margin-top: 0; }
+dl dd > :last-child {
+margin-bottom: 0; }
+blockquote {
+border-left: 4px solid #dddddd;
+padding: 0 15px;
+color: #777777; }
+blockquote > :first-child {
+margin-top: 0; }
+blockquote > :last-child {
+margin-bottom: 0; }
+table {
+padding: 0; }
+table tr {
+border-top: 1px solid #cccccc;
+background-color: white;
+margin: 0;
+padding: 0; }
+table tr:nth-child(2n) {
+background-color: #f8f8f8; }
+table tr th {
+font-weight: bold;
+border: 1px solid #cccccc;
+text-align: left;
+margin: 0;
+padding: 6px 13px; }
+table tr td {
+border: 1px solid #cccccc;
+text-align: left;
+margin: 0;
+padding: 6px 13px; }
+table tr th :first-child, table tr td :first-child {
+margin-top: 0; }
+table tr th :last-child, table tr td :last-child {
+margin-bottom: 0; }
+img {
+max-width: 100%; }
+span.frame {
+display: block;
+overflow: hidden; }
+span.frame > span {
+border: 1px solid #dddddd;
+display: block;
+float: left;
+overflow: hidden;
+margin: 13px 0 0;
+padding: 7px;
+width: auto; }
+span.frame span img {
+display: block;
+float: left; }
+span.frame span span {
+clear: both;
+color: #333333;
+display: block;
+padding: 5px 0 0; }
+span.align-center {
+display: block;
+overflow: hidden;
+clear: both; }
+span.align-center > span {
+display: block;
+overflow: hidden;
+margin: 13px auto 0;
+text-align: center; }
+span.align-center span img {
+margin: 0 auto;
+text-align: center; }
+span.align-right {
+display: block;
+overflow: hidden;
+clear: both; }
+span.align-right > span {
+display: block;
+overflow: hidden;
+margin: 13px 0 0;
+text-align: right; }
+span.align-right span img {
+margin: 0;
+text-align: right; }
+span.float-left {
+display: block;
+margin-right: 13px;
+overflow: hidden;
+float: left; }
+span.float-left span {
+margin: 13px 0 0; }
+span.float-right {
+display: block;
+margin-left: 13px;
+overflow: hidden;
+float: right; }
+span.float-right > span {
+display: block;
+overflow: hidden;
+margin: 13px auto 0;
+text-align: right; }
+code, tt {
+margin: 0 2px;
+padding: 0 5px;
+white-space: nowrap;
+border: 1px solid #eaeaea;
+background-color: #f8f8f8;
+border-radius: 3px; }
+pre code {
+margin: 0;
+padding: 0;
+white-space: pre;
+border: none;
+background: transparent; }
+.highlight pre {
+background-color: #f8f8f8;
+border: 1px solid #cccccc;
+font-size: 13px;
+line-height: 19px;
+overflow: auto;
+padding: 6px 10px;
+border-radius: 3px; }
+pre {
+background-color: #f8f8f8;
+border: 1px solid #cccccc;
+font-size: 13px;
+line-height: 19px;
+overflow: auto;
+padding: 6px 10px;
+border-radius: 3px; }
+pre code, pre tt {
+background-color: transparent;
+border: none; }
+</style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript">var fileref=document.createElement('script')
+fileref.setAttribute("type","text/javascript")
+fileref.setAttribute("src", "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+document.getElementsByTagName("head")[0].appendChild(fileref)
+</script>
+</head>
+<body>
+<p>分子動力学法（molecular dynamics;
+MD）は、運動方程式に従って系の運動を時々刻々追跡していく手法である。計算機で物理現象を解析する強力な手法であり、非常に幅広い領域で使われている。ここでは、MDでよく用いられるアルゴリズムを導出し、そのアルゴリズムが持つ性質を理解することを目指す。</p>
+<p>1次元空間中の粒子の運動を考える。時刻 <span class="math inline">\(t\)</span> での粒子の位置を <span class="math inline">\(x(t)\)</span> 、速度を <span class="math inline">\(v(t) = \dot{x}(t)\)</span> 、加速度を <span class="math inline">\(a(t) = \ddot{x}(t)\)</span> と表記する。質量は
+<span class="math inline">\(m\)</span> とする。 <span class="math inline">\(x(t + \Delta t)\)</span> を <span class="math inline">\(t\)</span> の近くでテイラー展開すると</p>
+<p><span class="math display">\[
+x(t + \Delta t) = x(t) + \Delta t v(t) + \cdots
+\]</span></p>
+<p><span class="math display">\[
+v(t + \Delta t) = v(t) + \Delta t a(t) + \cdots
+\]</span></p>
+<p>である。この差分方程式に従って粒子の運動を追跡するのが「オイラー法」という数値積分手法である。
+<span class="math inline">\(\Delta t\)</span>
+の1次の精度しかなく、この直線による近似はすぐに破綻する。近似で使う多項式の次数を上げていって精度を出すこともできる。詳細は、数値計算の教科書で「ルンゲクッタ法」に関連する箇所を読んでみてください。</p>
+<p>これらの方法には、数値誤差が蓄積されてしまうという難点がある。物理的には、全エネルギーが時間とともにズレてしまうことに相当し、物理現象のシミュレーションとしては具合が悪い。そのため、実際の研究では「速度ベルレ法」という別の方法がよく用いられる。そのアルゴリズムを導出してみよう。今回は2次まで展開してみると、</p>
+<p><span class="math display">\[
+x(t + \Delta t) = x(t) + \Delta t v(t) + \frac{\Delta t^2}{2} a(t) +
+\cdots
+\]</span></p>
+<p>となる（以下、 <span class="math inline">\(\Delta t^3\)</span>
+以上の項は考えないことにする）。同様に、 <span class="math inline">\(x(t)\)</span> を <span class="math inline">\(t +
+\Delta t\)</span> の近くで展開することも出来る。すると、</p>
+<p><span class="math display">\[
+x(t) = x(t + \Delta t) - \Delta t v(t + \Delta t) + \frac{\Delta t^2}{2}
+a(t + \Delta t)
+\]</span></p>
+<p>と書くことができる。これらの両辺を足し合わせて整理すると、</p>
+<p><span class="math display">\[
+v(t + \Delta t) = v(t) + \frac{\Delta t}{2} \left[a(t) + a(t + \Delta
+t)\right]
+\]</span></p>
+<p>となる。</p>
+<p>ところで、運動方程式 <span class="math inline">\(ma(t) =
+F(t)\)</span> から、加速度 <span class="math inline">\(a(t)\)</span>
+は粒子にかかる力 <span class="math inline">\(F(t)\)</span> を用いて</p>
+<p><span class="math display">\[
+a(t) = \frac{F(t)}{m}
+\]</span></p>
+<p>と表せる。これを使って上のテイラー展開を書き直すと</p>
+<p><span class="math display">\[
+x(t + \Delta t) = x(t) + \Delta t v(t) + \frac{\Delta t^2}{2m} F(t)
+\]</span></p>
+<p><span class="math display">\[
+v(t + \Delta t) = v(t) + \frac{\Delta t}{2m} \left[F(t) + F(t + \Delta
+t)\right]
+\]</span></p>
+<p>と書ける。少しだけ式変形すると</p>
+<p><span class="math display">\[
+x(t + \Delta t) = x(t) + \Delta t \left[ v(t) + \frac{\Delta t}{2m} F(t)
+\right]
+\]</span></p>
+<p><span class="math display">\[
+v(t + \Delta t) = \left[ v(t) + \frac{\Delta t}{2m} F(t) \right] +
+\frac{\Delta t}{2m} F(t + \Delta t)
+\]</span></p>
+<p>と、鉤括弧内に共通した部分が現れる。</p>
+<p>これが、速度べルレ法（velocity
+Verlet）というアルゴリズムでよく使われる形である。改めてアルゴリズムを整理すると、速度ベルレ法は</p>
+<ol>
+<li><span class="math inline">\(v\left(t + \frac{\Delta t}{2}\right) =
+v(t) + \frac{\Delta t}{2m}F(t)\)</span> で速度を更新する</li>
+<li><span class="math inline">\(x(t + \Delta t) = x(t) + \Delta t
+v\left(t + \frac{\Delta t}{2}\right)\)</span> で位置を更新する</li>
+<li>新しい時刻での位置 <span class="math inline">\(x(t + \Delta
+t)\)</span> で力 <span class="math inline">\(F(t + \Delta t)\)</span>
+を計算する</li>
+<li><span class="math inline">\(v(t + \Delta t) = v\left(t +
+\frac{\Delta t}{2}\right) + \frac{\Delta t}{2m}F(t + \Delta t)\)</span>
+で速度を更新する</li>
+<li>ステップ1に戻る</li>
+</ol>
+<p>と、まとめられる。これまで単一の粒子による1次元の運動を考えてきたが、3次元空間中の
+<span class="math inline">\(N\)</span>
+粒子の運動（物質の研究をするときに一番自然な設定）に変更するのは簡単なはずだ。</p>
+<p>さて、これは運動方程式を解いていることに他ならない。そのときには当然エネルギー保存則が成り立つので、速度ベルレ法によって数値積分された系はミクロカノニカル分布に従った状態を取っていく。つまり、粒子数
+<span class="math inline">\(N\)</span> 、体積 <span class="math inline">\(V\)</span> 、エネルギー <span class="math inline">\(E\)</span> が一定の状態を時々刻々発生させていく<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>ため、速度ベルレ法は「 <em>NVE</em>
+ダイナミクス」と呼ばれることも多い。</p>
+<p>以上で速度ベルレ法の導出は完了した。このアルゴリズムの実装は簡単だろう。実装の際には、このリポジトリ内に具体例を置いてあるので参照してほしい。また、自分でコードを書かずとも、世の中には沢山のMDプログラムが存在している。有名所では、</p>
+<ul>
+<li><a href="https://www.lammps.org">LAMMPS</a></li>
+<li><a href="https://glotzerlab.engin.umich.edu/hoomd-blue">HOOMD-blue</a></li>
+<li><a href="http://rumd.org">RUMD</a></li>
+<li><a href="https://wiki.fysik.dtu.dk/ase">ASE</a></li>
+<li><a href="https://radical-ai.github.io/torch-sim">torch-sim</a></li>
+</ul>
+<p>などが挙げられる。その使い方はマニュアルを見て自分で学習できると思う。参考までに、Kob-AndersenモデルのLAMMPSスクリプトは<a href="https://gist.github.com/kumpeishiraishi/a0de42f6477e90e5f2ac3c692389db38">ここ</a>にある。</p>
+<p>以下では、速度ベルレ法の持つ「長時間に亘ってエネルギーが保存する」という性質を詳しく理解するため、解析力学の定式化で速度ベルレ法をもう一度導出してみよう。系の状態を一般化座標と一般化運動量
+<span class="math inline">\((q_1, q_2, \cdots, q_{3N}, p_1, p_2, \cdots,
+p_{3N})\)</span> で表す。ハミルトニアン <span class="math inline">\(H =
+K(p) + V(q)\)</span> を使って、ハミルトンの運動方程式は</p>
+<p><span class="math display">\[
+\frac{d\vec{q}}{dt} = \frac{\partial H}{\partial \vec{p}}, \quad
+\frac{d\vec{p}}{dt} = -\frac{\partial H}{\partial \vec{q}}
+\]</span></p>
+<p>のように書ける。これは正準方程式とも呼ぶ。正準座標 <span class="math inline">\(\vec{r} = (\vec{q}, \vec{p})\)</span>
+から変換して得られた別の座標 <span class="math inline">\(\vec{R} =
+(\vec{Q}, \vec{P})\)</span>
+が正準方程式を満たすとき、その変換は正準変換という。正準変換の必要十分条件を考える。正準方程式は、行列</p>
+<p><span class="math display">\[
+M =
+\begin{pmatrix}
+0  &amp; I \\
+-I &amp; 0
+\end{pmatrix}
+\]</span></p>
+<p>を使って（ここで <span class="math inline">\(0, I\)</span>
+はそれぞれサイズ <span class="math inline">\(3N \times 3N\)</span>
+のゼロ行列と単位行列とする）</p>
+<p><span class="math display">\[
+\dot{r}_i = M_{ij} \frac{\partial H}{\partial r_j}
+\]</span></p>
+<p>と書き表すことができる。 <span class="math inline">\(\vec{r}\)</span>
+から <span class="math inline">\(\vec{R}\)</span>
+への正準変換を考える。新しい座標の時間微分は</p>
+<p><span class="math display">\[
+\dot{R}_i = \frac{\partial R_i}{\partial r_m} \dot{r}_m
+\]</span></p>
+<p>となるが、正準方程式から</p>
+<p><span class="math display">\[
+\dot{R}_i = \frac{\partial R_i}{\partial r_m} M_{mk} \frac{\partial
+H}{\partial r_k} = \frac{\partial R_i}{\partial r_m} M_{mk}
+\frac{\partial R_j}{\partial r_k} \frac{\partial H}{\partial R_j}
+\]</span></p>
+<p>と書き換えることができる。正準変換を考えているから当然 <span class="math inline">\(\vec{R}\)</span> も正準方程式を満たすので、</p>
+<p><span class="math display">\[
+\dot{R}_i = M_{ij} \frac{\partial H}{\partial R_j}
+\]</span></p>
+<p>となる。両式を見比べると、ヤコビアン <span class="math inline">\(J_{ij} = \frac{\partial R_i}{\partial
+r_j}\)</span> を使って、正準変換の必要十分条件は</p>
+<p><span class="math display">\[
+J M J^T = M
+\]</span></p>
+<p>と書くことができる。これをシンプレクティック条件と呼ぶ。</p>
+<p>さて、時間発展とは、ある時刻の座標 <span class="math inline">\((\vec{q}(t), \vec{p}(t))\)</span>
+から別の時刻の座標 <span class="math inline">\((\vec{q}(t^\prime),
+\vec{p}(t^\prime))\)</span>
+への正準変換と見做すことができる。これをもう少し深堀りしてみよう。位相空間中の点
+<span class="math inline">\(A(\vec{q}, \vec{p})\)</span> を考える。
+<span class="math inline">\(A\)</span> を時刻 <span class="math inline">\(t\)</span>
+について微分すると、チェインルールより</p>
+<p><span class="math display">\[
+\frac{dA}{dt} = \sum_{\alpha = 1}^{3N} \left[ \frac{\partial A}{\partial
+q_\alpha} \frac{dq_\alpha}{dt} + \frac{\partial A}{\partial p_\alpha}
+\frac{dp_\alpha}{dt} \right]
+\]</span></p>
+<p>と書けるが、正準方程式より、この微分は</p>
+<p><span class="math display">\[
+\frac{dA}{dt} = \sum_{\alpha = 1}^{3N} \left[ \frac{\partial H}{\partial
+p_\alpha} \frac{\partial A}{\partial q_\alpha} - \frac{\partial
+H}{\partial q_\alpha} \frac{\partial A}{\partial p_\alpha} \right]
+\]</span></p>
+<p>と書き直せる。ポアソン括弧を使えば <span class="math inline">\(\frac{dA}{dt} = \{A, H\}\)</span>
+と書くこともできる。ここで、リウビル演算子 <span class="math inline">\(iL = \{\bullet, H\}\)</span> を定義すると、 <span class="math inline">\(A\)</span> の微分は <span class="math inline">\(\frac{dA}{dt} = iLA\)</span> となり、この解は</p>
+<p><span class="math display">\[
+A(t) = e^{iLt} A(0)
+\]</span></p>
+<p>と書ける。ここで現れた <span class="math inline">\(e^{iLt}\)</span>
+（リウビル演算子を指数の肩に乗せたもの）を時間発展演算子と呼ぶ。</p>
+<p>リウビル演算子 <span class="math inline">\(iL\)</span>
+の定義から、これは2つに分解することができる： <span class="math inline">\(iL = iL_A + iL_B\)</span>
+。これらのリウビル演算子は非可換なので、指数の肩に乗せた時間発展演算子を指数関数の積の形で厳密に分解することはできない。しかし、トロッター分解</p>
+<p><span class="math display">\[
+e^{A+B} = \lim_{P \to \infty} \left[ e^{A/P} e^{B/P} \right]^P
+\]</span></p>
+<p><span class="math display">\[
+e^{A+B} = \lim_{P \to \infty} \left[ e^{B/2P} e^{A/P} e^{B/2P} \right]^P
+\]</span></p>
+<p>という公式を用いて近似することはできる（第1式は1次の展開、第2式は2次の展開、
+<span class="math inline">\(P\)</span>
+は整数）。つまり、時間発展演算子をトロッター分解すると、</p>
+<p><span class="math display">\[
+e^{iLt} = \lim_{P \to \infty} \left[ e^{iL_B t/2P} e^{iL_A t/P} e^{iL_B
+t/2P} \right]^P
+\]</span></p>
+<p>となるのだ。ここで、 <span class="math inline">\(\Delta t =
+t/P\)</span> として書き直すと、</p>
+<p><span class="math display">\[
+e^{iLt} = \lim_{P \to \infty, \Delta t \to 0} \left[ e^{iL_B \Delta t/2}
+e^{iL_A \Delta t} e^{iL_B \Delta t/2} \right]^P
+\]</span></p>
+<p>という形になる。よって、</p>
+<p><span class="math display">\[
+e^{iL\Delta t} \approx e^{iL_A \Delta t} e^{iL_B \Delta t} + O(\Delta
+t^2)
+\]</span></p>
+<p><span class="math display">\[
+e^{iL\Delta t} \approx e^{iL_B \Delta t/2} e^{iL_A \Delta t} e^{iL_B
+\Delta t/2} + O(\Delta t^3)
+\]</span></p>
+<p>という分解ができる（1次と2次の分解を例示した）。</p>
+<p>いよいよ、これを具体的に適用してみよう。リウビル演算子の個々の成分は</p>
+<p><span class="math display">\[
+iL_A = \frac{\partial H}{\partial p} \frac{\partial}{\partial q} =
+\frac{\partial K}{\partial p} \frac{\partial}{\partial q} = \frac{p}{m}
+\frac{\partial}{\partial q}
+\]</span></p>
+<p><span class="math display">\[
+iL_B = -\frac{\partial H}{\partial q} \frac{\partial}{\partial p} =
+-\frac{\partial V}{\partial q} \frac{\partial}{\partial p} = F(q)
+\frac{\partial}{\partial p}
+\]</span></p>
+<p>である。これを使って、2次の展開</p>
+<p><span class="math display">\[
+\exp (iL\Delta t) \approx \exp\left[ \frac{\Delta t}{2} F(q)
+\frac{\partial}{\partial p} \right] \exp\left[ \Delta t \frac{p}{m}
+\frac{\partial}{\partial q} \right] \exp\left[ \frac{\Delta t}{2} F(q)
+\frac{\partial}{\partial p} \right]
+\]</span></p>
+<p>を一つずつ <span class="math inline">\((q, p)\)</span>
+に作用させる。まず、一番右の演算子を作用させると、</p>
+<p><span class="math display">\[
+\exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right]
+\begin{pmatrix}
+q \\
+p
+\end{pmatrix}
+=
+\left(
+1 + \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} + \cdots
+\right)
+\begin{pmatrix}
+q \\
+p
+\end{pmatrix}
+=
+\begin{pmatrix}
+q \\
+p + \frac{\Delta t}{2}F(q)
+\end{pmatrix}
+\]</span></p>
+<p>となる。次に、真ん中の演算子は、</p>
+<p><span class="math display">\[
+\exp\left[ \Delta t \frac{p}{m} \frac{\partial}{\partial q} \right]
+\begin{pmatrix}
+q \\
+p + \frac{\Delta t}{2}F(q)
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} \\
+p + \frac{\Delta t}{2} F\left( q + \Delta t \frac{p}{m}\right)
+\end{pmatrix}
+\]</span></p>
+<p>となる。但し、 <span class="math inline">\(p\)</span>
+成分において</p>
+<p><span class="math display">\[
+\exp\left(c \frac{\partial}{\partial x} \right) g(x) = \sum \frac{1}{k!}
+c^k g^{(k)}(x) = g(x + c)
+\]</span></p>
+<p>という関係を使った。最後に、一番左の演算子を作用させると、</p>
+<p><span class="math display">\[
+\exp\left[ \frac{\Delta t}{2} F(q) \frac{\partial}{\partial p} \right]
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} \\
+p + \frac{\Delta t}{2} F\left( q + \Delta t \frac{p}{m}\right)
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} + \frac{\Delta t^2}{2m} F(q) \\
+p + \frac{\Delta t}{2} F(q) + \frac{\Delta t}{2} F\left(
+q + \frac{\Delta t}{m}\left[ p + \frac{\Delta t}{2}F(q) \right]
+\right)
+\end{pmatrix}
+\]</span>
+となる。これは、上でテイラー展開を用いて導出した速度ベルレ法と一致している。</p>
+<p>これと同様に1次の展開公式</p>
+<p><span class="math display">\[
+\exp (iL\Delta t) \approx \exp\left[ \Delta t \frac{p}{m}
+\frac{\partial}{\partial q} \right] \exp\left[ \Delta t F(q)
+\frac{\partial}{\partial p} \right]
+\]</span></p>
+<p>に適用すると、</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{p}{m} \\
+p + \Delta t F(q + \Delta t \frac{p}{m})
+\end{pmatrix}
+\]</span></p>
+<p>となる（計算してみよう）。これは、冒頭で導出したオイラー法とはアルゴリズムが異なることに注意（こちらは
+<strong>新しい位置での力を使って</strong> 速度を更新する）。</p>
+<p>さて、時間発展は正準変換であり、正準変換はシンプレクティック条件を満たすことを先に述べた。ここでトロッター分解から導出したアルゴリズムは、時間発展演算子の分解から導出されたものなので、当然シンプレクティックである。これを確認してみよう。</p>
+<p>まず、1次の方法</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t \frac{\partial H}{\partial p} \\
+p - \Delta t \frac{\partial H}{\partial Q}
+\end{pmatrix}
+\]</span></p>
+<p>におけるヤコビアンは</p>
+<p><span class="math display">\[
+J = \frac{\partial (Q, P)}{\partial (q, p)}
+=
+\begin{pmatrix}
+1                                           &amp; \Delta t
+\frac{\partial^2 H}{\partial p^2} \\
+-\Delta t \frac{\partial^2 H}{\partial Q^2} &amp; 1 - \Delta t^2
+\frac{\partial^2 H}{\partial Q^2} \frac{\partial^2 H}{\partial p^2}
+\end{pmatrix}
+\]</span></p>
+<p>となる。これは <span class="math inline">\(JMJ^T = M\)</span>
+の関係を満たす。つまり、このアルゴリズムはオイラー法と違ってシンプレクティック性を満たすので、シンプレクティック・オイラー法などと呼ばれる。</p>
+<p>次に2次の方法（速度ベルレ法）</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t p - \frac{\Delta t^2}{2} \frac{\partial H}{\partial q} \\
+p - \frac{\Delta t}{2} \left[ \frac{\partial H}{\partial q} +
+\frac{\partial H}{\partial Q} \right]
+\end{pmatrix}
+\]</span></p>
+<p>のヤコビアンは</p>
+<p><span class="math display">\[
+J =
+\begin{pmatrix}
+\frac{\partial Q}{\partial q} &amp; \frac{\partial Q}{\partial p} \\
+\frac{\partial P}{\partial q} &amp; \frac{\partial P}{\partial p}
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 - \frac{\Delta t^2}{2} \frac{\partial^2 H}{\partial q^2} &amp; \Delta
+t \\
+- \frac{\Delta t}{2} \left[ \frac{\partial^2 H}{\partial q^2} +
+\frac{\partial^2 H}{\partial Q^2} \left( 1 - \frac{\Delta t^2}{2}
+\frac{\partial^2 H}{\partial q^2} \right) \right] &amp; 1 - \frac{\Delta
+t^2}{2} \frac{\partial^2 H}{\partial Q^2}
+\end{pmatrix}
+\]</span></p>
+<p>であるが、これもシンプレクティック条件を満たす。つまり、指数分解公式から導出されたアルゴリズムはシンプレクティック性を満たすことが確認できた（1次元調和振動子での実装は<a href="https://gist.github.com/kumpeishiraishi/e5d550bc840339a707d50aafdf80dbc2">ここ</a>を参照）。エネルギー保存</p>
+<p><span class="math display">\[
+\frac{dH}{dt} = \left( \frac{\partial H}{\partial \vec{r}} \right)^T
+\frac{d \vec{r}}{dt} = \left( \frac{\partial H}{\partial \vec{r}}
+\right)^T M \left( \frac{\partial H}{\partial \vec{r}} \right) = 0
+\]</span></p>
+<p>は、正準方程式に従うならば当然成り立つ。MDで使うアルゴリズムにシンプレクティック条件を課すことは、上式の
+<span class="math inline">\(M\)</span>
+の部分を保ち、長時間でのエネルギー保存を保証するのである。なお、1次と2次の双方で、ヤコビアンの行列式は
+<span class="math inline">\(\det J = 1\)</span>
+であった。シンプレクティック条件から従うこの性質は、相空間の体積を保存するリウビルの定理に対応している。また、シンプレクティック性とは直接関係ないが、上の分解から速度ベルレ法は時間反転対称の形をしていることが分かる。1次の分解から得られるシンプレクティック・オイラー法はシンプレクティックだが時間反転対称ではないことに注意。</p>
+<p>トロッター分解において</p>
+<p><span class="math display">\[
+\exp (iLt) \approx \exp\left[ \frac{\Delta t}{2} F(q)
+\frac{\partial}{\partial p} \right] \exp\left[ \Delta t \frac{p}{m}
+\frac{\partial}{\partial q} \right] \exp\left[ \frac{\Delta t}{2} F(q)
+\frac{\partial}{\partial p} \right]
+\]</span></p>
+<p>なる分解を行ったが、右辺と <strong>厳密に</strong>
+一致するように、左辺のリウビル演算子を取ることもできる。このように定義し直したリウビル演算子を
+<span class="math inline">\(iL^\prime\)</span>
+とすれば、トロッター分解に基づいて導出されたアルゴリズムは <span class="math inline">\(iL^\prime\)</span> に対応するハミルトニアンを
+<strong>厳密に</strong>
+保存することが分かる。これを「影のハミルトニアン」と呼ぶ。</p>
+<p>ここでは、1次元調和振動子に着目する。この系の正しいハミルトニアンは</p>
+<p><span class="math display">\[
+H = \frac{1}{2} p^2 + \frac{1}{2} q^2
+\]</span></p>
+<p>である（質量、バネ定数ともに1とした）。この系の1次のシンプレクティックな数値解法</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+Q\\
+P
+\end{pmatrix}
+=
+\begin{pmatrix}
+q + \Delta t p \\
+p - \Delta t Q
+\end{pmatrix}
+\]</span></p>
+<p>に対して、影のハミルトニアンを導出してみよう。元々、このアルゴリズムは1次のトロッター分解</p>
+<p><span class="math display">\[
+e^{iL\Delta t} \approx e^{iL_A\Delta t} e^{iL_B\Delta t}
+\]</span></p>
+<p>から得られたのであった。ここでは、この分解が厳密に成り立つようなリウビル演算子
+<span class="math inline">\(iL^\prime\)</span>
+を求める。その際に、Baker–Campbell–Hausdorff（BCH）の公式を用いる。一般に、非可換な演算子
+<span class="math inline">\(X, Y\)</span> について <span class="math inline">\(e^Z = e^Xe^Y\)</span> が成り立つとき、 <span class="math inline">\(Z\)</span> は</p>
+<p><span class="math display">\[
+Z = X + Y + \frac{1}{2}[X, Y] + \frac{1}{12}\left( [X, [X, Y]] + [Y, [Y,
+X]] \right) - \frac{1}{24}[Y, [X, [X, Y]]] + \cdots
+\]</span></p>
+<p>と書くことができる。これがBCHの公式である。</p>
+<p>これをトロッター分解に適用する（2次のトロッター分解についてはBCHの公式を2度使えばよい）。
+<span class="math inline">\(X = iL_A\)</span> 、 <span class="math inline">\(Y = iL_B\)</span> と略記すると、</p>
+<p><span class="math display">\[
+iL^\prime \Delta t = iL \Delta t + \frac{\Delta t^2}{2}[X, Y] +
+\frac{\Delta t^3}{12}\left( [X, [X, Y]] + [Y, [Y, X]] \right) -
+\frac{\Delta t^4}{24}[Y, [X, [X, Y]]] + \cdots
+\]</span></p>
+<p>である（ <span class="math inline">\(X + Y = iL\)</span>
+）。ここで</p>
+<p><span class="math display">\[
+X = iL_A =  \frac{\partial H}{\partial p}\frac{\partial}{\partial q} =
+\{\bullet, K\}
+\]</span></p>
+<p><span class="math display">\[
+Y = iL_B = -\frac{\partial H}{\partial q}\frac{\partial}{\partial p} =
+\{\bullet, V\}
+\]</span></p>
+<p>より、</p>
+<p><span class="math display">\[
+[X, Y] f = XY f - YX f = \{ \{f, V\}, K \} - \{ \{f, K\}, V \} = \{ f,
+\{V, K\} \}
+\]</span></p>
+<p>となる。但し、ポアソン括弧に対するヤコビの恒等式</p>
+<p><span class="math display">\[
+\{f, \{g, h\}\} + \{g, \{h, f\}\} + \{h, \{f, g\}\} = 0
+\]</span></p>
+<p>を使った（証明してみよう）。 <span class="math inline">\(\{V, K\} =
+pq\)</span> なので、リウビル演算子 <span class="math inline">\(iL^\prime\)</span> に対する1次の補正は</p>
+<p><span class="math display">\[
+[X, Y] = \{\bullet, pq\}
+\]</span></p>
+<p>である。従って、</p>
+<p><span class="math display">\[
+iL^\prime = \{\bullet, H\} + \frac{\Delta t}{2}\{\bullet, pq\} +
+O(\Delta t^2)
+\]</span></p>
+<p>となり、影のハミルトニアンは</p>
+<p><span class="math display">\[
+H^\prime(p, q) = \frac{1}{2}p^2 + \frac{1}{2}q^2 + \frac{\Delta t}{2}pq
+\]</span></p>
+<p>となる。実際に、（位置を先に更新する）シンプレクティック・オイラー法で
+<span class="math inline">\(H^\prime(P, Q) = H^\prime(p, q)\)</span>
+となることを確認してみよう。また、調和振動子の系において、速度ベルレ法に対する影のハミルトニアンも求めてみよう。</p>
+<p>参考文献：</p>
+<ul>
+<li>Tuckerman, &#39;Statistical Mechanics: Theory and Molecular Simulation&#39;,
+Oxford University Press</li>
+<li>Allen, Tildesley, &#39;Computer Simulation of Liquids&#39;, Oxford
+University Press</li>
+<li>Frenkel, Smit, &#39;Understanding Molecular Simulation&#39;, Academic
+Press</li>
+<li>渡辺宙志「<a href="https://kaityo256.github.io/md2019/">分子動力学法の理論と実装</a>」（集中講義資料）</li>
+<li>陰山聡「<a href="https://www.research.kobe-u.ac.jp/csi-viz/members/kageyama/docs/160122a_canonical_transform.pdf">正準変換についてのメモ</a>」</li>
+<li>Yoshida, &#39;Construction of higher order symplectic integrators&#39;, <a href="https:doi.org/10.1016/0375-9601(90)90092-3">Physics Letters A
+<strong>150</strong>, 262–268 (1990)</a></li>
+<li>吉田春夫「シンプレクティック数値解法」数理科学 <strong>33</strong>,
+37–46 (1995)</li>
+</ul>
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>このような一連のミクロ状態の時系列を「トラジェクトリー」や「（相空間中の）軌道」などと呼ぶ<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>
