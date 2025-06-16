@@ -265,11 +265,21 @@ background-color: transparent;
 border: none; }
 </style>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script type="text/javascript">var fileref=document.createElement('script')
-fileref.setAttribute("type","text/javascript")
-fileref.setAttribute("src", "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-document.getElementsByTagName("head")[0].appendChild(fileref)
-</script>
+  <script>
+    window.MathJax = {
+      tex: {
+	inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+	fontCache: 'global'
+      },
+      startup: {
+	renderer: 'svg'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+	  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 <p>分子動力学法（molecular dynamics;
