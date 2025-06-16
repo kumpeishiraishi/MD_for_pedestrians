@@ -444,5 +444,5 @@ $$
 - Frenkel, Smit, 'Understanding Molecular Simulation', Academic Press
 - 渡辺宙志「[[https://kaityo256.github.io/md2019/][分子動力学法の理論と実装]]」（集中講義資料）
 - 陰山聡「[[https://www.research.kobe-u.ac.jp/csi-viz/members/kageyama/docs/160122a_canonical_transform.pdf][正準変換についてのメモ]]」
-- Yoshida, 'Construction of higher order symplectic integrators', [[https:doi.org/10.1016/0375-9601(90)90092-3][Physics Letters A *150*, 262--268 (1990)]]
+- Yoshida, 'Construction of higher order symplectic integrators', [[https://doi.org/10.1016/0375-9601(90)90092-3][Physics Letters A *150*, 262--268 (1990)]]
 - 吉田春夫「シンプレクティック数値解法」数理科学 *33*, 37--46 (1995)
