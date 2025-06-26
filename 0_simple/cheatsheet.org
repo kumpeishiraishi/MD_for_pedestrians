@@ -1,0 +1,115 @@
+分子動力学法のアルゴリズム各種のチートシート
+
+- 粒子の位置： $\vec{x}(t)$
+- 粒子の速度： $\vec{v}(t)$
+- 粒子にかかる力： $\vec{F}(t) = -\frac{\partial V(\vec{x}(t))}{\partial \vec{x}}$
+- 粒子の質量： $m=1$
+- 系の自由度数： $N_\mathrm{DOF} = dN$
+- 系の温度： $T = |\vec{v}(t)|^2 / N_\mathrm{DOF}$
+- 時刻 $t = 0$ から時刻 $t = h$ へのステップとして書きます
+
+* エネルギー一定（NVE）
+** 速度Verlet
+1. $\vec{v} (\frac{h}{2}) = \vec{v}(0) + \frac{h}{2} \vec{F}(0)$
+2. $\vec{x} (h) = \vec{x}(0) + h \vec{v}(\frac{h}{2})$
+3. $\vec{F}(h)$ を計算する
+4. $\vec{v} (h) = \vec{v}(\frac{h}{2}) + \frac{h}{2} \vec{F}(h)$
+
+** 位置Verlet
+1. $\vec{x} (\frac{h}{2}) = \vec{x}(0) + \frac{h}{2} \vec{v}(0)$
+2. $\vec{F}(\frac{h}{2})$ を計算する
+3. $\vec{v} (h) = \vec{v}(0) + h \vec{F}(\frac{h}{2})$
+4. $\vec{x} (h) = \vec{x}(\frac{h}{2}) + \frac{h}{2} \vec{v}(h)$
+
+* 温度一定（NVT）
+** Berendsen熱浴
+1. $\vec{v} (\frac{h}{2}) = \vec{v}(0) + \frac{h}{2} \vec{F}(0)$
+2. $\vec{x} (h) = \vec{x}(0) + h \vec{v}(\frac{h}{2})$
+3. $\vec{F}(h)$ を計算する
+4. $\vec{v} (h) = \vec{v}(\frac{h}{2}) + \frac{h}{2} \vec{F}(h)$
+5. $\alpha = \sqrt{1 + h \frac{T_\mathrm{target} - T}{\tau T}}$ を計算する
+6. $\vec{v} (h) = \alpha \vec{v}(h)$
+
+** Nosé-Hoover熱浴
+1. 熱浴の更新
+   1. $v_\xi = v_\xi + \frac{h}{4} (|\vec{v}(0)|^2 - N_\mathrm{DOF}T_\mathrm{target}) / Q$
+   2. $\vec{v}(0) = \exp(-v_\xi \frac{h}{2}) \vec{v}(0)$
+   3. $v_\xi = v_\xi + \frac{h}{4} (|\vec{v}(0)|^2 - N_\mathrm{DOF}T_\mathrm{target}) / Q$
+2. $\vec{v} (\frac{h}{2}) = \vec{v}(0) + \frac{h}{2} \vec{F}(0)$
+3. $\vec{x} (h) = \vec{x}(0) + h \vec{v}(\frac{h}{2})$
+4. $\vec{F}(h)$ を計算する
+5. $\vec{v} (h) = \vec{v}(\frac{h}{2}) + \frac{h}{2} \vec{F}(h)$
+6. ステップ1を繰り返す
+
+** Nosé-Hoover Chain熱浴
+1. 熱浴の更新（降順）
+   1. $v_{\xi_M} = v_{\xi_M} + \frac{h}{4} (Q_{M-1} v_{\xi_{M-1}}^2 - T_\mathrm{target}) / Q_M$
+   2. $v_{\xi_{M-1}} = \exp(-v_{\xi_M} \frac{h}{8}) v_{\xi_{M-1}}$
+   3. $v_{\xi_{M-1}} = v_{\xi_{M-1}} + \frac{h}{4} (Q_{M-2} v_{\xi_{M-2}}^2 - T_\mathrm{target}) / Q_{M-1}$
+   4. $v_{\xi_{M-1}} = \exp(-v_{\xi_M} \frac{h}{8}) v_{\xi_{M-1}}$
+   5. ステップ2から4を $M-2$ 番目、 $M-3$ 番目、 $\cdots$ 、3番目の熱浴に対して繰り返す
+   6. $v_{\xi_2} = \exp(-v_{\xi_3} \frac{h}{8}) v_{\xi_2}$
+   7. $v_{\xi_2} = v_{\xi_2} + \frac{h}{4} (Q_1 v_{\xi_1}^2 - T_\mathrm{target}) / Q_2$
+   8. $v_{\xi_2} = \exp(-v_{\xi_3} \frac{h}{8}) v_{\xi_2}$
+   9. $v_{\xi_1} = \exp(-v_{\xi_2} \frac{h}{8}) v_{\xi_1}$
+   10. $v_{\xi_1} = v_{\xi_1} + \frac{h}{4} (|\vec{v}(0)|^2 - N_\mathrm{DOF} T_\mathrm{target}) / Q_1$
+   11. $v_{\xi_1} = \exp(-v_{\xi_2} \frac{h}{8}) v_{\xi_1}$
+2. $\vec{v}(0) = \exp(-v_{\xi_1} \frac{h}{2}) \vec{v}(0)$
+3. ステップ1を昇順に繰り返す
+4. $\vec{v} (\frac{h}{2}) = \vec{v}(0) + \frac{h}{2} \vec{F}(0)$
+5. $\vec{x} (h) = \vec{x}(0) + h \vec{v}(\frac{h}{2})$
+6. $\vec{F}(h)$ を計算する
+7. $\vec{v} (h) = \vec{v}(\frac{h}{2}) + \frac{h}{2} \vec{F}(h)$
+8. ステップ1, 2, 3を繰り返す
+
+** Bussi熱浴
+1. $\vec{v} (\frac{h}{2}) = \vec{v}(0) + \frac{h}{2} \vec{F}(0)$
+2. $\vec{x} (h) = \vec{x}(0) + h \vec{v}(\frac{h}{2})$
+3. $\vec{F}(h)$ を計算する
+4. $\vec{v} (h) = \vec{v}(\frac{h}{2}) + \frac{h}{2} \vec{F}(h)$
+5. $\alpha = \sqrt{f + \frac{T_\mathrm{target}}{|\vec{v}(h)|^2} (1 - f)(r_1^2 + 2g) + 2 r_2 \sqrt{f(1 - f) \frac{T_\mathrm{target}}{|\vec{v}(h)|^2}}}$ を計算する
+   - $f = \exp(-h/\tau)$
+   - $r_1, r_2 \sim \mathcal{N}(0, 1)$ （平均0、分散1の正規分布）
+   - $g \sim \mathrm{Gamma}((N_\mathrm{DOF}-2)/2, 1)$ （shape parameter $(N_\mathrm{DOF}-2)/2$ 、inverse scale parameter 1のガンマ分布）
+   - 但し、系内の自由度数が奇数の場合はガンマ分布の部分が異なるので、論文を参照すること
+6. $\vec{v} (h) = \alpha \vec{v}(h)$
+
+** Langevin熱浴（BAOAB）
+1. $\vec{v} (\frac{h}{2}) = \vec{v}(0) + \frac{h}{2} \vec{F}(0)$
+2. $\vec{x} (\frac{h}{2}) = \vec{x}(0) + \frac{h}{2} \vec{v}(\frac{h}{2})$
+3. $\vec{v}^* (\frac{h}{2}) = c_1 \vec{v} (\frac{h}{2}) + c_3 \vec{r}$
+   - $c_1 = \exp(-\gamma h)$ 、 $c_3 = \sqrt{T_\mathrm{target} (1 - c_1^2)}$
+   - $\vec{r}$ ：平均0、分散1の正規分布に従う乱数 $N_\mathrm{DOF}$ 個
+4. $\vec{x} (h) = \vec{x}(\frac{h}{2}) + \frac{h}{2} \vec{v}^*(\frac{h}{2})$
+5. $\vec{F}(h)$ を計算する
+6. $\vec{v} (h) = \vec{v}^*(\frac{h}{2}) + \frac{h}{2} \vec{F}(h)$
+
+なお、BAOABの分解が最も精度が良いとされている
+
+** Langevin熱浴（ABOBA）
+1. $\vec{x} (\frac{h}{2}) = \vec{x}(0) + \frac{h}{2} \vec{v}(0)$
+2. $\vec{F}(\frac{h}{2})$ を計算する
+3. $\vec{v} (\frac{h}{2}) = \vec{v}(0) + \frac{h}{2} \vec{F}(\frac{h}{2})$
+4. $\vec{v}^* (\frac{h}{2}) = c_1 \vec{v} (\frac{h}{2}) + c_3 \vec{r}$
+   - $c_1 = \exp(-\gamma h)$ 、 $c_3 = \sqrt{T_\mathrm{target} (1 - c_1^2)}$
+   - $\vec{r}$ ：平均0、分散1の正規分布に従う乱数 $N_\mathrm{DOF}$ 個
+5. $\vec{v} (h) = \vec{v}^* (\frac{h}{2}) + \frac{h}{2} \vec{F}(\frac{h}{2})$
+6. $\vec{x} (h) = \vec{x}(\frac{h}{2}) + \frac{h}{2} \vec{v}(h)$
+
+** Langevin熱浴（SPV）
+1. $\vec{x} (\frac{h}{2}) = \vec{x}(0) + \frac{h}{2} \vec{v}(0)$
+2. $\vec{F}(\frac{h}{2})$ を計算する
+3. $\vec{v} (h) = c_1 \vec{v} (0) + c_2 \vec{F}(\frac{h}{2}) + c_3 \vec{r}$
+   - $c_1 = \exp(-\gamma h)$ 、 $c_2 = (1 - c_1)/\gamma$ 、 $c_3 = \sqrt{T_\mathrm{target} (1 - c_1^2)}$
+   - $\vec{r}$ ：平均0、分散1の正規分布に従う乱数 $N_\mathrm{DOF}$ 個
+4. $\vec{x} (h) = \vec{x}(\frac{h}{2}) + \frac{h}{2} \vec{v}(h)$
+
+参考文献：
+- ベルレ法関係：教科書を参照
+- Berendsen熱浴：[[https://doi.org/10.1063/1.448118][J. Chem. Phys. *81*, 3684–3690 (1984)]]
+- Nosé-Hoover熱浴
+  - オリジナル論文：[[https://doi.org/10.1080/00268978400101201][Mol. Phys. *52*, 255-268 (1984)]], [[https://doi.org/10.1063/1.447334][J. Chem. Phys. *81*, 511-519 (1984)]], [[https://doi.org/10.1103/PhysRevA.31.1695][Phys. Rev. A *31*, 1695 (1985)]]
+  - Nosé-Hoover Chain熱浴：[[https://doi.org/10.1063/1.463940][J. Chem. Phys. *97*, 2635–2643 (1992)]]
+  - 実際のアルゴリズムは、この論文に載っている時間反転対称な分解がよく使われる：[[https://doi.org/10.1080/00268979600100761][Mol. Phys *87*, 1117-1157 (1996)]]
+- Bussi熱浴：[[https://doi.org/10.1063/1.2408420][J. Chem. Phys. *126*, 014101 (2007)]]
+- Langevin熱浴：[[https://doi.org/10.1093/amrx/abs010][Appl. Math. Res. eXpress *2013*, 34-56 (2013)]]

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>cheatsheet</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">body {
+font-family: Helvetica, arial, sans-serif;
+font-size: 14px;
+line-height: 1.6;
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: white;
+padding: 30px; }
+body > *:first-child {
+margin-top: 0 !important; }
+body > *:last-child {
+margin-bottom: 0 !important; }
+a {
+color: #4183C4; }
+a.absent {
+color: #cc0000; }
+a.anchor {
+display: block;
+padding-left: 30px;
+margin-left: -30px;
+cursor: pointer;
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0; }
+h1, h2, h3, h4, h5, h6 {
+margin: 20px 0 10px;
+padding: 0;
+font-weight: bold;
+-webkit-font-smoothing: antialiased;
+cursor: text;
+position: relative; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+text-decoration: none; }
+h1 tt, h1 code {
+font-size: inherit; }
+h2 tt, h2 code {
+font-size: inherit; }
+h3 tt, h3 code {
+font-size: inherit; }
+h4 tt, h4 code {
+font-size: inherit; }
+h5 tt, h5 code {
+font-size: inherit; }
+h6 tt, h6 code {
+font-size: inherit; }
+h1 {
+font-size: 28px;
+color: black; }
+h2 {
+font-size: 24px;
+border-bottom: 1px solid #cccccc;
+color: black; }
+h3 {
+font-size: 18px; }
+h4 {
+font-size: 16px; }
+h5 {
+font-size: 14px; }
+h6 {
+color: #777777;
+font-size: 14px; }
+p, blockquote, ul, ol, dl, li, table, pre {
+margin: 15px 0; }
+hr {
+background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+border: 0 none;
+color: #cccccc;
+height: 4px;
+padding: 0; }
+body > h2:first-child {
+margin-top: 0;
+padding-top: 0; }
+body > h1:first-child {
+margin-top: 0;
+padding-top: 0; }
+body > h1:first-child + h2 {
+margin-top: 0;
+padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+margin-top: 0;
+padding-top: 0; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+margin-top: 0;
+padding-top: 0; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+margin-top: 0; }
+li p.first {
+display: inline-block; }
+ul, ol {
+padding-left: 30px; }
+ul :first-child, ol :first-child {
+margin-top: 0; }
+ul :last-child, ol :last-child {
+margin-bottom: 0; }
+dl {
+padding: 0; }
+dl dt {
+font-size: 14px;
+font-weight: bold;
+font-style: italic;
+padding: 0;
+margin: 15px 0 5px; }
+dl dt:first-child {
+padding: 0; }
+dl dt > :first-child {
+margin-top: 0; }
+dl dt > :last-child {
+margin-bottom: 0; }
+dl dd {
+margin: 0 0 15px;
+padding: 0 15px; }
+dl dd > :first-child {
+margin-top: 0; }
+dl dd > :last-child {
+margin-bottom: 0; }
+blockquote {
+border-left: 4px solid #dddddd;
+padding: 0 15px;
+color: #777777; }
+blockquote > :first-child {
+margin-top: 0; }
+blockquote > :last-child {
+margin-bottom: 0; }
+table {
+padding: 0; }
+table tr {
+border-top: 1px solid #cccccc;
+background-color: white;
+margin: 0;
+padding: 0; }
+table tr:nth-child(2n) {
+background-color: #f8f8f8; }
+table tr th {
+font-weight: bold;
+border: 1px solid #cccccc;
+text-align: left;
+margin: 0;
+padding: 6px 13px; }
+table tr td {
+border: 1px solid #cccccc;
+text-align: left;
+margin: 0;
+padding: 6px 13px; }
+table tr th :first-child, table tr td :first-child {
+margin-top: 0; }
+table tr th :last-child, table tr td :last-child {
+margin-bottom: 0; }
+img {
+max-width: 100%; }
+span.frame {
+display: block;
+overflow: hidden; }
+span.frame > span {
+border: 1px solid #dddddd;
+display: block;
+float: left;
+overflow: hidden;
+margin: 13px 0 0;
+padding: 7px;
+width: auto; }
+span.frame span img {
+display: block;
+float: left; }
+span.frame span span {
+clear: both;
+color: #333333;
+display: block;
+padding: 5px 0 0; }
+span.align-center {
+display: block;
+overflow: hidden;
+clear: both; }
+span.align-center > span {
+display: block;
+overflow: hidden;
+margin: 13px auto 0;
+text-align: center; }
+span.align-center span img {
+margin: 0 auto;
+text-align: center; }
+span.align-right {
+display: block;
+overflow: hidden;
+clear: both; }
+span.align-right > span {
+display: block;
+overflow: hidden;
+margin: 13px 0 0;
+text-align: right; }
+span.align-right span img {
+margin: 0;
+text-align: right; }
+span.float-left {
+display: block;
+margin-right: 13px;
+overflow: hidden;
+float: left; }
+span.float-left span {
+margin: 13px 0 0; }
+span.float-right {
+display: block;
+margin-left: 13px;
+overflow: hidden;
+float: right; }
+span.float-right > span {
+display: block;
+overflow: hidden;
+margin: 13px auto 0;
+text-align: right; }
+code, tt {
+margin: 0 2px;
+padding: 0 5px;
+white-space: nowrap;
+border: 1px solid #eaeaea;
+background-color: #f8f8f8;
+border-radius: 3px; }
+pre code {
+margin: 0;
+padding: 0;
+white-space: pre;
+border: none;
+background: transparent; }
+.highlight pre {
+background-color: #f8f8f8;
+border: 1px solid #cccccc;
+font-size: 13px;
+line-height: 19px;
+overflow: auto;
+padding: 6px 10px;
+border-radius: 3px; }
+pre {
+background-color: #f8f8f8;
+border: 1px solid #cccccc;
+font-size: 13px;
+line-height: 19px;
+overflow: auto;
+padding: 6px 10px;
+border-radius: 3px; }
+pre code, pre tt {
+background-color: transparent;
+border: none; }
+</style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript">var fileref=document.createElement('script')
+fileref.setAttribute("type","text/javascript")
+fileref.setAttribute("src", "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+document.getElementsByTagName("head")[0].appendChild(fileref)
+</script>
+</head>
+<body>
+<p>分子動力学法のアルゴリズム各種のチートシート</p>
+<ul>
+<li>粒子の位置： <span class="math inline">\(\vec{x}(t)\)</span></li>
+<li>粒子の速度： <span class="math inline">\(\vec{v}(t)\)</span></li>
+<li>粒子にかかる力： <span class="math inline">\(\vec{F}(t) =
+-\frac{\partial V(\vec{x}(t))}{\partial \vec{x}}\)</span></li>
+<li>粒子の質量： <span class="math inline">\(m=1\)</span></li>
+<li>系の自由度数： <span class="math inline">\(N_\mathrm{DOF} =
+dN\)</span></li>
+<li>系の温度： <span class="math inline">\(T = |\vec{v}(t)|^2 /
+N_\mathrm{DOF}\)</span></li>
+<li>時刻 <span class="math inline">\(t = 0\)</span> から時刻 <span class="math inline">\(t = h\)</span> へのステップとして書きます</li>
+</ul>
+<h1 id="エネルギー一定nve">エネルギー一定（NVE）</h1>
+<h2 id="速度verlet">速度Verlet</h2>
+<ol>
+<li><span class="math inline">\(\vec{v} (\frac{h}{2}) = \vec{v}(0) +
+\frac{h}{2} \vec{F}(0)\)</span></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(0) + h
+\vec{v}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{F}(h)\)</span> を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}(\frac{h}{2}) +
+\frac{h}{2} \vec{F}(h)\)</span></li>
+</ol>
+<h2 id="位置verlet">位置Verlet</h2>
+<ol>
+<li><span class="math inline">\(\vec{x} (\frac{h}{2}) = \vec{x}(0) +
+\frac{h}{2} \vec{v}(0)\)</span></li>
+<li><span class="math inline">\(\vec{F}(\frac{h}{2})\)</span>
+を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}(0) + h
+\vec{F}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(\frac{h}{2}) +
+\frac{h}{2} \vec{v}(h)\)</span></li>
+</ol>
+<h1 id="温度一定nvt">温度一定（NVT）</h1>
+<h2 id="berendsen熱浴">Berendsen熱浴</h2>
+<ol>
+<li><span class="math inline">\(\vec{v} (\frac{h}{2}) = \vec{v}(0) +
+\frac{h}{2} \vec{F}(0)\)</span></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(0) + h
+\vec{v}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{F}(h)\)</span> を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}(\frac{h}{2}) +
+\frac{h}{2} \vec{F}(h)\)</span></li>
+<li><span class="math inline">\(\alpha = \sqrt{1 + h
+\frac{T_\mathrm{target} - T}{\tau T}}\)</span> を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \alpha
+\vec{v}(h)\)</span></li>
+</ol>
+<h2 id="nosé-hoover熱浴">Nosé-Hoover熱浴</h2>
+<ol>
+<li>熱浴の更新
+<ol>
+<li><span class="math inline">\(v_\xi = v_\xi + \frac{h}{4}
+(|\vec{v}(0)|^2 - N_\mathrm{DOF}T_\mathrm{target}) / Q\)</span></li>
+<li><span class="math inline">\(\vec{v}(0) = \exp(-v_\xi \frac{h}{2})
+\vec{v}(0)\)</span></li>
+<li><span class="math inline">\(v_\xi = v_\xi + \frac{h}{4}
+(|\vec{v}(0)|^2 - N_\mathrm{DOF}T_\mathrm{target}) / Q\)</span></li>
+</ol></li>
+<li><span class="math inline">\(\vec{v} (\frac{h}{2}) = \vec{v}(0) +
+\frac{h}{2} \vec{F}(0)\)</span></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(0) + h
+\vec{v}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{F}(h)\)</span> を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}(\frac{h}{2}) +
+\frac{h}{2} \vec{F}(h)\)</span></li>
+<li>ステップ1を繰り返す</li>
+</ol>
+<h2 id="nosé-hoover-chain熱浴">Nosé-Hoover Chain熱浴</h2>
+<ol>
+<li>熱浴の更新（降順）
+<ol>
+<li><span class="math inline">\(v_{\xi_M} = v_{\xi_M} + \frac{h}{4}
+(Q_{M-1} v_{\xi_{M-1}}^2 - T_\mathrm{target}) / Q_M\)</span></li>
+<li><span class="math inline">\(v_{\xi_{M-1}} = \exp(-v_{\xi_M}
+\frac{h}{8}) v_{\xi_{M-1}}\)</span></li>
+<li><span class="math inline">\(v_{\xi_{M-1}} = v_{\xi_{M-1}} +
+\frac{h}{4} (Q_{M-2} v_{\xi_{M-2}}^2 - T_\mathrm{target}) /
+Q_{M-1}\)</span></li>
+<li><span class="math inline">\(v_{\xi_{M-1}} = \exp(-v_{\xi_M}
+\frac{h}{8}) v_{\xi_{M-1}}\)</span></li>
+<li>ステップ2から4を <span class="math inline">\(M-2\)</span> 番目、
+<span class="math inline">\(M-3\)</span> 番目、 <span class="math inline">\(\cdots\)</span> 、3番目の熱浴に対して繰り返す</li>
+<li><span class="math inline">\(v_{\xi_2} = \exp(-v_{\xi_3} \frac{h}{8})
+v_{\xi_2}\)</span></li>
+<li><span class="math inline">\(v_{\xi_2} = v_{\xi_2} + \frac{h}{4} (Q_1
+v_{\xi_1}^2 - T_\mathrm{target}) / Q_2\)</span></li>
+<li><span class="math inline">\(v_{\xi_2} = \exp(-v_{\xi_3} \frac{h}{8})
+v_{\xi_2}\)</span></li>
+<li><span class="math inline">\(v_{\xi_1} = \exp(-v_{\xi_2} \frac{h}{8})
+v_{\xi_1}\)</span></li>
+<li><span class="math inline">\(v_{\xi_1} = v_{\xi_1} + \frac{h}{4}
+(|\vec{v}(0)|^2 - N_\mathrm{DOF} T_\mathrm{target}) / Q_1\)</span></li>
+<li><span class="math inline">\(v_{\xi_1} = \exp(-v_{\xi_2} \frac{h}{8})
+v_{\xi_1}\)</span></li>
+</ol></li>
+<li><span class="math inline">\(\vec{v}(0) = \exp(-v_{\xi_1}
+\frac{h}{2}) \vec{v}(0)\)</span></li>
+<li>ステップ1を昇順に繰り返す</li>
+<li><span class="math inline">\(\vec{v} (\frac{h}{2}) = \vec{v}(0) +
+\frac{h}{2} \vec{F}(0)\)</span></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(0) + h
+\vec{v}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{F}(h)\)</span> を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}(\frac{h}{2}) +
+\frac{h}{2} \vec{F}(h)\)</span></li>
+<li>ステップ1, 2, 3を繰り返す</li>
+</ol>
+<h2 id="bussi熱浴">Bussi熱浴</h2>
+<ol>
+<li><span class="math inline">\(\vec{v} (\frac{h}{2}) = \vec{v}(0) +
+\frac{h}{2} \vec{F}(0)\)</span></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(0) + h
+\vec{v}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{F}(h)\)</span> を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}(\frac{h}{2}) +
+\frac{h}{2} \vec{F}(h)\)</span></li>
+<li><span class="math inline">\(\alpha = \sqrt{f +
+\frac{T_\mathrm{target}}{|\vec{v}(h)|^2} (1 - f)(r_1^2 + 2g) + 2 r_2
+\sqrt{f(1 - f) \frac{T_\mathrm{target}}{|\vec{v}(h)|^2}}}\)</span>
+を計算する
+<ul>
+<li><span class="math inline">\(f = \exp(-h/\tau)\)</span></li>
+<li><span class="math inline">\(r_1, r_2 \sim \mathcal{N}(0, 1)\)</span>
+（平均0、分散1の正規分布）</li>
+<li><span class="math inline">\(g \sim
+\mathrm{Gamma}((N_\mathrm{DOF}-2)/2, 1)\)</span> （shape parameter <span class="math inline">\((N_\mathrm{DOF}-2)/2\)</span> 、inverse scale
+parameter 1のガンマ分布）</li>
+<li>但し、系内の自由度数が奇数の場合はガンマ分布の部分が異なるので、論文を参照すること</li>
+</ul></li>
+<li><span class="math inline">\(\vec{v} (h) = \alpha
+\vec{v}(h)\)</span></li>
+</ol>
+<h2 id="langevin熱浴baoab">Langevin熱浴（BAOAB）</h2>
+<ol>
+<li><span class="math inline">\(\vec{v} (\frac{h}{2}) = \vec{v}(0) +
+\frac{h}{2} \vec{F}(0)\)</span></li>
+<li><span class="math inline">\(\vec{x} (\frac{h}{2}) = \vec{x}(0) +
+\frac{h}{2} \vec{v}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{v}^* (\frac{h}{2}) = c_1 \vec{v}
+(\frac{h}{2}) + c_3 \vec{r}\)</span>
+<ul>
+<li><span class="math inline">\(c_1 = \exp(-\gamma h)\)</span> 、 <span class="math inline">\(c_3 = \sqrt{T_\mathrm{target} (1 -
+c_1^2)}\)</span></li>
+<li><span class="math inline">\(\vec{r}\)</span>
+：平均0、分散1の正規分布に従う乱数 <span class="math inline">\(N_\mathrm{DOF}\)</span> 個</li>
+</ul></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(\frac{h}{2}) +
+\frac{h}{2} \vec{v}^*(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{F}(h)\)</span> を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}^*(\frac{h}{2}) +
+\frac{h}{2} \vec{F}(h)\)</span></li>
+</ol>
+<p>なお、BAOABの分解が最も精度が良いとされている</p>
+<h2 id="langevin熱浴aboba">Langevin熱浴（ABOBA）</h2>
+<ol>
+<li><span class="math inline">\(\vec{x} (\frac{h}{2}) = \vec{x}(0) +
+\frac{h}{2} \vec{v}(0)\)</span></li>
+<li><span class="math inline">\(\vec{F}(\frac{h}{2})\)</span>
+を計算する</li>
+<li><span class="math inline">\(\vec{v} (\frac{h}{2}) = \vec{v}(0) +
+\frac{h}{2} \vec{F}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{v}^* (\frac{h}{2}) = c_1 \vec{v}
+(\frac{h}{2}) + c_3 \vec{r}\)</span>
+<ul>
+<li><span class="math inline">\(c_1 = \exp(-\gamma h)\)</span> 、 <span class="math inline">\(c_3 = \sqrt{T_\mathrm{target} (1 -
+c_1^2)}\)</span></li>
+<li><span class="math inline">\(\vec{r}\)</span>
+：平均0、分散1の正規分布に従う乱数 <span class="math inline">\(N_\mathrm{DOF}\)</span> 個</li>
+</ul></li>
+<li><span class="math inline">\(\vec{v} (h) = \vec{v}^* (\frac{h}{2}) +
+\frac{h}{2} \vec{F}(\frac{h}{2})\)</span></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(\frac{h}{2}) +
+\frac{h}{2} \vec{v}(h)\)</span></li>
+</ol>
+<h2 id="langevin熱浴spv">Langevin熱浴（SPV）</h2>
+<ol>
+<li><span class="math inline">\(\vec{x} (\frac{h}{2}) = \vec{x}(0) +
+\frac{h}{2} \vec{v}(0)\)</span></li>
+<li><span class="math inline">\(\vec{F}(\frac{h}{2})\)</span>
+を計算する</li>
+<li><span class="math inline">\(\vec{v} (h) = c_1 \vec{v} (0) + c_2
+\vec{F}(\frac{h}{2}) + c_3 \vec{r}\)</span>
+<ul>
+<li><span class="math inline">\(c_1 = \exp(-\gamma h)\)</span> 、 <span class="math inline">\(c_2 = (1 - c_1)/\gamma\)</span> 、 <span class="math inline">\(c_3 = \sqrt{T_\mathrm{target} (1 -
+c_1^2)}\)</span></li>
+<li><span class="math inline">\(\vec{r}\)</span>
+：平均0、分散1の正規分布に従う乱数 <span class="math inline">\(N_\mathrm{DOF}\)</span> 個</li>
+</ul></li>
+<li><span class="math inline">\(\vec{x} (h) = \vec{x}(\frac{h}{2}) +
+\frac{h}{2} \vec{v}(h)\)</span></li>
+</ol>
+<p>参考文献：</p>
+<ul>
+<li>ベルレ法関係：教科書を参照</li>
+<li>Berendsen熱浴：<a href="https://doi.org/10.1063/1.448118">J. Chem.
+Phys. <strong>81</strong>, 3684–3690 (1984)</a></li>
+<li>Nosé-Hoover熱浴
+<ul>
+<li>オリジナル論文：<a href="https://doi.org/10.1080/00268978400101201">Mol. Phys.
+<strong>52</strong>, 255-268 (1984)</a>, <a href="https://doi.org/10.1063/1.447334">J. Chem. Phys.
+<strong>81</strong>, 511-519 (1984)</a>, <a href="https://doi.org/10.1103/PhysRevA.31.1695">Phys. Rev. A
+<strong>31</strong>, 1695 (1985)</a></li>
+<li>Nosé-Hoover Chain熱浴：<a href="https://doi.org/10.1063/1.463940">J.
+Chem. Phys. <strong>97</strong>, 2635–2643 (1992)</a></li>
+<li>実際のアルゴリズムは、この論文に載っている時間反転対称な分解がよく使われる：<a href="https://doi.org/10.1080/00268979600100761">Mol. Phys
+<strong>87</strong>, 1117-1157 (1996)</a></li>
+</ul></li>
+<li>Bussi熱浴：<a href="https://doi.org/10.1063/1.2408420">J. Chem.
+Phys. <strong>126</strong>, 014101 (2007)</a></li>
+<li>Langevin熱浴：<a href="https://doi.org/10.1093/amrx/abs010">Appl.
+Math. Res. eXpress <strong>2013</strong>, 34-56 (2013)</a></li>
+</ul>
+</body>
+</html>
