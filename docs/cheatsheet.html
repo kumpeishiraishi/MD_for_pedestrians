@@ -279,7 +279,7 @@ border: none; }
     };
   </script>
   <script type="text/javascript" id="MathJax-script" async
-	  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 <p>分子動力学法のアルゴリズム各種のチートシート</p>
@@ -402,8 +402,8 @@ v_{\xi_1}\)</span></li>
 <li><span class="math inline">\(\vec{v} (h) = \vec{v}(\frac{h}{2}) +
 \frac{h}{2} \vec{F}(h)\)</span></li>
 <li><span class="math inline">\(\alpha = \sqrt{f +
-\frac{T_\mathrm{target}}{|\vec{v}(h)|^2} (1 - f)(r_1^2 + 2g) + 2 r_2
-\sqrt{f(1 - f) \frac{T_\mathrm{target}}{|\vec{v}(h)|^2}}}\)</span>
+\frac{T_\mathrm{target}}{|\vec{v}(h)|^2} (1 - f)(r_1^2 + r_2^2 + 2g) + 2
+r_1 \sqrt{f(1 - f) \frac{T_\mathrm{target}}{|\vec{v}(h)|^2}}}\)</span>
 を計算する
 <ul>
 <li><span class="math inline">\(f = \exp(-h/\tau)\)</span></li>

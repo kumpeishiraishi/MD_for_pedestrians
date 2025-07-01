@@ -67,7 +67,7 @@
 2. $\vec{x} (h) = \vec{x}(0) + h \vec{v}(\frac{h}{2})$
 3. $\vec{F}(h)$ を計算する
 4. $\vec{v} (h) = \vec{v}(\frac{h}{2}) + \frac{h}{2} \vec{F}(h)$
-5. $\alpha = \sqrt{f + \frac{T_\mathrm{target}}{|\vec{v}(h)|^2} (1 - f)(r_1^2 + 2g) + 2 r_2 \sqrt{f(1 - f) \frac{T_\mathrm{target}}{|\vec{v}(h)|^2}}}$ を計算する
+5. $\alpha = \sqrt{f + \frac{T_\mathrm{target}}{|\vec{v}(h)|^2} (1 - f)(r_1^2 + r_2^2 + 2g) + 2 r_1 \sqrt{f(1 - f) \frac{T_\mathrm{target}}{|\vec{v}(h)|^2}}}$ を計算する
    - $f = \exp(-h/\tau)$
    - $r_1, r_2 \sim \mathcal{N}(0, 1)$ （平均0、分散1の正規分布）
    - $g \sim \mathrm{Gamma}((N_\mathrm{DOF}-2)/2, 1)$ （shape parameter $(N_\mathrm{DOF}-2)/2$ 、inverse scale parameter 1のガンマ分布）
